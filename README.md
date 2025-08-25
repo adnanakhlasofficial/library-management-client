@@ -1,69 +1,85 @@
-# React + TypeScript + Vite
+# 📚 Minimal Library Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, full-stack library management app built with **React**, **TypeScript**, **Redux Toolkit**, and **Tailwind CSS v4**. Designed for clarity, modularity, and a premium user experience using **shadcn/ui** components.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
 
-## Expanding the ESLint configuration
+- **📖 Book Management** – Add, update, delete, and borrow books.
+- **📊 Borrow Summary** – Track borrowed quantities with real-time feedback.
+- **⚡ Responsive UI** – Minimalist layout with dark mode and glitch-inspired accents.
+- **🧩 Modular Architecture** – Clean separation of logic, UI, and state.
+- **🔄 RTK Query** – Efficient data fetching and caching.
+- **🎨 Tailwind v4 + shadcn** – Scalable theming and accessible components.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🧱 Tech Stack
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+| Layer        | Tech                        |
+| ------------ | --------------------------- |
+| Language     | TypeScript                  |
+| UI Library   | React                       |
+| State Mgmt   | Redux Toolkit + RTK Query   |
+| Styling      | Tailwind CSS v4 + shadcn/ui |
+| Package Mgmt | pnpm                        |
+| Backend      | Node.js + Express           |
+| Database     | MongoDB                     |
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+---
+
+## 📦 Folder Structure
+
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+src/
+├── components/ # Reusable UI components (shadcn-based)
+├── pages/ # Route-level components
+├── redux/ # RTK slices and API services
+├── types/ # TypeScript interfaces
+├── assets/ # Static assets (logos, icons, etc.)
+├── styles/ # Global styles and theme tokens
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
 ```
+
+---
+
+## 🛠️ Getting Started
+
+### 1. Clone the repo
+
+```bash
+git clone https://github.com/adnanakhlasofficial/library-management-client
+cd library-management
+```
+
+### 2. Install dependencies
+
+```bash
+pnpm install
+```
+
+### 3. Set up environment variables
+
+Create a `.env` file and add:
+
+```env
+VITE_API_URL=your_base_api_url
+```
+
+### 4. Run the app
+
+```bash
+pnpm dev
+```
+
+---
+
+## 🧪 Development Notes
+
+- Uses **Tailwind v4 semantic tokens** for scalable light/dark theming.
+- Built with **shadcn/ui** for accessible, customizable components.
+- Focused on **developer experience**: modular code, clean onboarding, and intuitive UX.
+
+---
