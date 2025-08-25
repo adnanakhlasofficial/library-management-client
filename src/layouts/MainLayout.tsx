@@ -6,7 +6,7 @@ export default function MainLayout() {
   return (
     <>
       <header className="bg-background border-b sticky top-0 z-10"><Navbar /></header>
-      <main>
+      <main className="px-2">
         <Outlet />
       </main>
       <Toaster />

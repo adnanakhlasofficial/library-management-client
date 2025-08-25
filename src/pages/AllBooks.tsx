@@ -33,7 +33,7 @@ export default function AllBooks() {
       <AllBookTable />
       <div className="my-4">
         <Pagination>
-          <PaginationContent>
+          <PaginationContent className="flex items-center gap-4">
             {/* <PaginationItem onClick={() => dispatch(updateSkip(skip - 10))}>
               <PaginationPrevious />
             </PaginationItem> */}

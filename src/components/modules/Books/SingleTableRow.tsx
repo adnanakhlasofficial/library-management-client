@@ -46,7 +46,7 @@ export default function SingleTableRow({ book, idx }: ISingleBook) {
       })}>{available ? "In Stock" : "Out Of Stock"}</Badge></TableCell>
       <TableCell className="flex items-center gap-2">
         <Button onClick={() => navigate(`/book/${_id}`)}><Eye /></Button>
-        <Button><Pencil /></Button>
+        <Button onClick={() => navigate(`/edit-book/${_id}`)}><Pencil /></Button>
         <Button onClick={handleDelete}><Trash2 /></Button>
         <Button onClick={() => navigate(`/borrow/${_id}`)}><BookOpen /></Button>
       </TableCell>

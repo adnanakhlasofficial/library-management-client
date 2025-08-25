@@ -9,34 +9,64 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
-import { useCreateBookMutation } from "@/redux/features/book/booksApi"
+import { useGetSingleBookQuery, useUpdateBookMutation } from "@/redux/features/book/booksApi"
 import type { IBook } from "@/types"
+import { useEffect } from "react"
 import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form"
 import toast from "react-hot-toast"
-import { useNavigate } from "react-router"
+import { useParams } from "react-router"
 
-export default function CreateBookForm() {
-  const form = useForm<IBook>()
-  const [createBook, { isLoading }] = useCreateBookMutation()
-  const navigate = useNavigate();
+export default function UpdateBookForm() {
+  const { id } = useParams()
+  const { data: book, isLoading, isError, error, } = useGetSingleBookQuery(id)
+  const [updateBook] = useUpdateBookMutation()
+
+  const form = useForm<IBook>({
+    defaultValues: {
+      _id: "",
+      title: "",
+      author: "",
+      copies: 0,
+      genre: "BIOGRAPHY",
+
+    }
+  })
+
+  useEffect(() => {
+    form.reset({
+      _id: book?.data?._id,
+      title: book?.data?.title,
+      author: book?.data?.author,
+      copies: book?.data?.copies,
+      description: book?.data?.description,
+      genre: book?.data?.genre
+    })
+
+  }, [book, form])
 
 
-  const onSubmit: SubmitHandler<FieldValues> = async (book) => {
+  if (isLoading) return <p>Loading...</p>
+
+  if (isError) return <p>{JSON.stringify(error)}</p>
+
+  const onSubmit: SubmitHandler<FieldValues> = async (newBook) => {
     const bookData = {
-      ...book,
-      copies: parseInt(book.copies),
-      available: book.copies > 0 ? true : false
+      ...newBook,
+      copies: parseInt(newBook.copies),
+      _id: book?.data?._id
     };
 
-    const { data } = await createBook(bookData)
+    console.log(bookData)
 
-    if (data.success) {
-      toast.success(data.message)
-      navigate("/books")
+    const { data } = await updateBook(bookData)
+
+    if (data?.success) {
+      toast.success("Book updated successfully")
     } else {
-      toast.error(data.message)
+      toast.error("Failed to update the book")
     }
-    form.reset()
+
+    // form.reset()
   }
 
   return (
@@ -74,7 +104,7 @@ export default function CreateBookForm() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Genre</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <Select onValueChange={field.onChange} defaultValue={book?.data?.genre}>
                   <FormControl>
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="Select a genre" />
@@ -101,7 +131,7 @@ export default function CreateBookForm() {
             <FormItem>
               <FormLabel>Copies</FormLabel>
               <FormControl>
-                <Input {...field} value={field.value || ""} type="number" min={0} />
+                <Input  {...field} value={field.value || ""} type="number" min={0} />
               </FormControl>
             </FormItem>
           )}
@@ -119,7 +149,7 @@ export default function CreateBookForm() {
           )}
         />
 
-        <Button disabled={isLoading} className="col-span-full" type="submit">{isLoading ? "Creating book..." : "Create Book"}</Button>
+        <Button disabled={isLoading} className="col-span-full" type="submit">{isLoading ? "Updating book..." : "Update Book"}</Button>
 
       </form>
     </Form>
