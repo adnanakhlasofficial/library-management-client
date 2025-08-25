@@ -29,22 +29,6 @@ A modern, full-stack library management app built with **React**, **TypeScript**
 
 ---
 
-## 📦 Folder Structure
-
-```
-
-src/
-├── components/ # Reusable UI components (shadcn-based)
-├── pages/ # Route-level components
-├── redux/ # RTK slices and API services
-├── types/ # TypeScript interfaces
-├── assets/ # Static assets (logos, icons, etc.)
-├── styles/ # Global styles and theme tokens
-
-```
-
----
-
 ## 🛠️ Getting Started
 
 ### 1. Clone the repo
