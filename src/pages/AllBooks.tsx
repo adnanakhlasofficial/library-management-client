@@ -37,7 +37,7 @@ export default function AllBooks() {
               <PaginationPrevious />
             </PaginationItem> */}
 
-            {pageArr.map((page, idx) =>
+            {pageArr.map((_page, idx) =>
               <PaginationItem onClick={() => { dispatch(updateSkip(idx)); dispatch(booksApi.util.invalidateTags(['books'])) }} key={idx}>
                 <PaginationLink>{idx + 1}</PaginationLink>
               </PaginationItem>

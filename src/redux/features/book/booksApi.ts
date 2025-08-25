@@ -13,6 +13,9 @@ export const booksApi = createApi({
       },
       providesTags: ["books"],
     }),
+    getSingleBook: builder.query({
+      query: (id) => `/${id}`,
+    }),
     getCountBooks: builder.query({
       query: () => "/count",
     }),
@@ -22,6 +25,7 @@ export const booksApi = createApi({
         method: "POST",
         body: bookData,
       }),
+      invalidatesTags: ["books"],
     }),
   }),
 });
@@ -30,4 +34,5 @@ export const {
   useGetBooksQuery,
   useGetCountBooksQuery,
   useCreateBookMutation,
+  useGetSingleBookQuery,
 } = booksApi;

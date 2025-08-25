@@ -1,6 +1,7 @@
 import {
   Table,
   TableBody,
+  TableCell,
   TableHead,
   TableHeader,
   TableRow
@@ -14,7 +15,6 @@ import SingleTableRow from "./SingleTableRow"
 export default function AllBookTable() {
 
   const state = useAppSelector(selectQueries)
-  console.log(state)
   const { isError, isLoading, data, error } = useGetBooksQuery(state)
 
   if (isLoading) return <p>Loading...</p>
@@ -38,10 +38,14 @@ export default function AllBookTable() {
         </TableHeader>
         <TableBody>
           {
-            data?.data?.map((book: IBook) => <SingleTableRow key={book._id} book={book} />)
+            data?.data.length > 0
+              ? data?.data?.map((book: IBook) => <SingleTableRow key={book._id} book={book} />)
+              : <TableRow><TableCell colSpan={7}><h2 className="text-2xl font-semibold mt-2 text-center">No books found</h2></TableCell></TableRow>
           }
         </TableBody>
       </Table>
     </div>
   )
 }
+
+
