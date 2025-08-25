@@ -16,7 +16,8 @@ export const booksSlice = createSlice({
   initialState,
   reducers: {
     updateSkip: (state, action: PayloadAction<number>) => {
-      state.pagination.skip = action.payload;
+      const skip = 10 * action.payload;
+      state.pagination.skip = skip;
     },
   },
 });

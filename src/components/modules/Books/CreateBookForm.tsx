@@ -9,100 +9,115 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
-import { useForm } from "react-hook-form"
+import { useCreateBookMutation } from "@/redux/features/book/booksApi"
+import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form"
+import toast from "react-hot-toast"
 
 export default function CreateBookForm() {
   const form = useForm()
 
-  const onSubmit = (data) => {
-    console.log({ ...data, copies: parseInt(data.copies), available: data.copies > 0 ? true : false })
+  const [createBook, { isLoading }] = useCreateBookMutation()
+
+
+  const onSubmit: SubmitHandler<FieldValues> = async (book) => {
+    const bookData = {
+      ...book,
+      copies: parseInt(book.copies),
+      available: book.copies > 0 ? true : false
+    };
+
+    const { data } = await createBook(bookData)
+    if (data.success) {
+      toast.success(data.message)
+    } else {
+      toast.error(data.message)
+    }
+    form.reset()
   }
 
   return (
-    <div className="max-w-lg mx-auto my-6">
-      <Form {...form}>
-        <form className="border rounded-lg p-2 grid gap-4" onSubmit={form.handleSubmit(onSubmit)}>
+    <Form {...form}>
+      <form className="border rounded-xl p-5 grid gap-4" onSubmit={form.handleSubmit(onSubmit)}>
+        <FormField
+          control={form.control}
+          name="title"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Title</FormLabel>
+              <FormControl>
+                <Input {...field} value={field.value || ""} />
+              </FormControl>
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="author"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Author</FormLabel>
+              <FormControl>
+                <Input {...field} value={field.value || ""} />
+              </FormControl>
+            </FormItem>
+          )}
+        />
+        <FormItem>
           <FormField
             control={form.control}
-            name="title"
+            name="genre"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Title</FormLabel>
-                <FormControl>
-                  <Input {...field} value={field.value || ""} />
-                </FormControl>
+                <FormLabel>Genre</FormLabel>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <FormControl>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select a genre" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="FICTION">FICTION</SelectItem>
+                    <SelectItem value="NON_FICTION">NON_FICTION</SelectItem>
+                    <SelectItem value="SCIENCE">SCIENCE</SelectItem>
+                    <SelectItem value="HISTORY">HISTORY</SelectItem>
+                    <SelectItem value="BIOGRAPHY">BIOGRAPHY</SelectItem>
+                    <SelectItem value="FANTASY">FANTASY</SelectItem>
+                  </SelectContent>
+                </Select>
               </FormItem>
             )}
           />
 
-          <FormField
-            control={form.control}
-            name="author"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Author</FormLabel>
-                <FormControl>
-                  <Input {...field} value={field.value || ""} />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-          <FormItem>
-            <FormField
-              control={form.control}
-              name="genre"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Genre</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
-                    <FormControl>
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Select a genre" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="FICTION">FICTION</SelectItem>
-                      <SelectItem value="NON_FICTION">NON_FICTION</SelectItem>
-                      <SelectItem value="SCIENCE">SCIENCE</SelectItem>
-                      <SelectItem value="HISTORY">HISTORY</SelectItem>
-                      <SelectItem value="BIOGRAPHY">BIOGRAPHY</SelectItem>
-                      <SelectItem value="FANTASY">FANTASY</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </FormItem>
-              )}
-            />
+        </FormItem>
+        <FormField
+          control={form.control}
+          name="copies"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Copies</FormLabel>
+              <FormControl>
+                <Input {...field} value={field.value || ""} type="number" min={0} />
+              </FormControl>
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <Textarea {...field} value={field.value || ""} />
+              </FormControl>
+            </FormItem>
+          )}
+        />
 
-          </FormItem>
-          <FormField
-            control={form.control}
-            name="copies"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Copies</FormLabel>
-                <FormControl>
-                  <Input {...field} value={field.value || ""} type="number" min={0} />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="description"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Description</FormLabel>
-                <FormControl>
-                  <Textarea {...field} value={field.value || ""} />
-                </FormControl>
-              </FormItem>
-            )}
-          />
+        <Button disabled={isLoading} className="col-span-full" type="submit">{isLoading ? "Creating book..." : "Create Book"}</Button>
 
-          <Button className="col-span-full" type="submit">Submit</Button>
-
-        </form>
-      </Form>
-    </div>
+      </form>
+    </Form>
   )
 }
