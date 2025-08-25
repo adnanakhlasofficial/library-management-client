@@ -6,8 +6,10 @@ import {
   TableRow
 } from "@/components/ui/table"
 import { cn } from "@/lib/utils"
+import { useDeleteBookMutation } from "@/redux/features/book/booksApi"
 import type { IBook } from "@/types"
 import { BookOpen, Eye, Pencil, Trash2 } from "lucide-react"
+import toast from "react-hot-toast"
 import { useNavigate } from "react-router"
 
 interface ISingleBook {
@@ -16,8 +18,17 @@ interface ISingleBook {
 
 export default function SingleTableRow({ book }: ISingleBook) {
   const { _id, title, author, copies, available, genre, isbn } = book
-
+  const [deleteBook] = useDeleteBookMutation()
   const navigate = useNavigate()
+
+  const handleDelete = async () => {
+    const { data } = await deleteBook(_id)
+    if (data.success) {
+      toast.success(data.message)
+    } else {
+      toast.error(data.message)
+    }
+  }
 
   return (
     <TableRow>
@@ -34,8 +45,8 @@ export default function SingleTableRow({ book }: ISingleBook) {
       <TableCell className="flex items-center gap-2">
         <Button onClick={() => navigate(`/book/${_id}`)}><Eye /></Button>
         <Button><Pencil /></Button>
-        <Button><Trash2 /></Button>
-        <Button><BookOpen /></Button>
+        <Button onClick={handleDelete}><Trash2 /></Button>
+        <Button onClick={() => navigate(`/borrow/${_id}`)}><BookOpen /></Button>
       </TableCell>
 
     </TableRow>

@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/pagination";
 import { updateSkip } from "@/redux/features/book/booksSlice";
 import { useAppDispatch } from "@/redux/hook";
+import { Button } from "@/components/ui/button";
 
 
 export default function AllBooks() {
@@ -39,7 +40,7 @@ export default function AllBooks() {
 
             {pageArr.map((_page, idx) =>
               <PaginationItem onClick={() => { dispatch(updateSkip(idx)); dispatch(booksApi.util.invalidateTags(['books'])) }} key={idx}>
-                <PaginationLink>{idx + 1}</PaginationLink>
+                <PaginationLink><Button>{idx + 1}</Button></PaginationLink>
               </PaginationItem>
             )}
 

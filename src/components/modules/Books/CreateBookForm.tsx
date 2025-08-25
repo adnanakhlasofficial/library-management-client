@@ -10,11 +10,12 @@ import {
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import { useCreateBookMutation } from "@/redux/features/book/booksApi"
+import type { IBook } from "@/types"
 import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form"
 import toast from "react-hot-toast"
 
 export default function CreateBookForm() {
-  const form = useForm()
+  const form = useForm<IBook>()
 
   const [createBook, { isLoading }] = useCreateBookMutation()
 
