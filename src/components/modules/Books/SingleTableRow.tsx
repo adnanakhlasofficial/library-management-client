@@ -14,9 +14,10 @@ import { useNavigate } from "react-router"
 
 interface ISingleBook {
   book: IBook
+  idx: number
 }
 
-export default function SingleTableRow({ book }: ISingleBook) {
+export default function SingleTableRow({ book, idx }: ISingleBook) {
   const { _id, title, author, copies, available, genre, isbn } = book
   const [deleteBook] = useDeleteBookMutation()
   const navigate = useNavigate()
@@ -32,6 +33,7 @@ export default function SingleTableRow({ book }: ISingleBook) {
 
   return (
     <TableRow>
+      <TableCell>{idx + 1}</TableCell>
       <TableCell>{title}</TableCell>
       <TableCell>{author}</TableCell>
       <TableCell>{genre}</TableCell>

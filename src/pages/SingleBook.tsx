@@ -12,46 +12,45 @@ export default function SingleBook() {
 
   if (isError) return <p>{JSON.stringify(error)}</p>
 
-  const { title, author, description, genre, isbn, createdAt, updatedAt, copies, available } = data.data
 
   return (
     <section className="max-w-3xl mx-auto px-6 py-10 text-neutral-900 dark:text-slate-100 border mt-6 rounded-lg shadow-xl">
       <header className="mb-6 border-b border-neutral-300 dark:border-slate-700 pb-4">
-        <h1 className="text-3xl font-bold tracking-tight neon-text">{title}</h1>
-        <p className="text-sm text-neutral-500 dark:text-slate-400">by {author}</p>
+        <h1 className="text-3xl font-bold tracking-tight neon-text">{data?.data?.title}</h1>
+        <p className="text-sm text-neutral-500 dark:text-slate-400">by {data?.data?.author}</p>
       </header>
 
       <div className="space-y-4">
-        <p className="text-lg text-neutral-800 dark:text-slate-200">{description}</p>
+        <p className="text-lg text-neutral-800 dark:text-slate-200">{data?.data?.description}</p>
 
         <div className="grid grid-cols-2 gap-4 text-sm text-neutral-700 dark:text-slate-300">
           <div>
-            <span className="font-semibold text-neutral-900 dark:text-slate-200">Genre:</span> {genre}
+            <span className="font-semibold text-neutral-900 dark:text-slate-200">Genre:</span> {data?.data?.genre}
           </div>
           <div>
-            <span className="font-semibold text-neutral-900 dark:text-slate-200">ISBN:</span> {isbn}
+            <span className="font-semibold text-neutral-900 dark:text-slate-200">ISBN:</span> {data?.data?.isbn}
           </div>
           <div>
-            <span className="font-semibold text-neutral-900 dark:text-slate-200">Copies:</span> {copies}
+            <span className="font-semibold text-neutral-900 dark:text-slate-200">Copies:</span> {data?.data?.copies}
           </div>
           <div>
             <span className="font-semibold text-neutral-900 dark:text-slate-200">Available:</span>{" "}
             <Badge
               className={cn("font-medium text-center", {
-                "bg-red-100 text-red-600 dark:bg-red-200 dark:text-red-500": available === false,
-                "bg-green-100 text-green-600 dark:bg-green-200 dark:text-green-500": available === true,
+                "bg-red-100 text-red-600 dark:bg-red-200 dark:text-red-500": data?.data?.available === false,
+                "bg-green-100 text-green-600 dark:bg-green-200 dark:text-green-500": data?.data?.available === true,
               })}
             >
-              {available ? "In Stock" : "Out of Stock"}
+              {data?.data?.available ? "In Stock" : "Out of Stock"}
             </Badge>
           </div>
           <div>
             <span className="font-semibold text-neutral-900 dark:text-slate-200">Created:</span>{" "}
-            {new Date(createdAt).toLocaleDateString()}
+            {new Date(data?.data?.createdAt).toLocaleDateString()}
           </div>
           <div>
             <span className="font-semibold text-neutral-900 dark:text-slate-200">Updated:</span>{" "}
-            {new Date(updatedAt).toLocaleDateString()}
+            {new Date(data?.data?.updatedAt).toLocaleDateString()}
           </div>
         </div>
       </div>

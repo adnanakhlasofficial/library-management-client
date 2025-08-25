@@ -16,7 +16,6 @@ import toast from "react-hot-toast"
 
 export default function CreateBookForm() {
   const form = useForm<IBook>()
-
   const [createBook, { isLoading }] = useCreateBookMutation()
 
 
@@ -28,6 +27,7 @@ export default function CreateBookForm() {
     };
 
     const { data } = await createBook(bookData)
+
     if (data.success) {
       toast.success(data.message)
     } else {

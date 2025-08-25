@@ -8,21 +8,27 @@ import type { IBorrow } from "@/types"
 import { CalendarIcon } from "lucide-react"
 import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form"
 import { format } from "date-fns"
-import { useParams } from "react-router"
+import { useNavigate, useParams } from "react-router"
 import { useBorrowBookMutation } from "@/redux/features/borrow/borrowApi"
 import toast from "react-hot-toast"
+import { useAppDispatch } from "@/redux/hook"
+import { booksApi } from "@/redux/features/book/booksApi"
 
 export default function BorrowBookForm() {
   const { bookId } = useParams()
   const form = useForm<IBorrow>()
   const [borrowBook] = useBorrowBookMutation()
-
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch()
 
   const onSubmit: SubmitHandler<FieldValues> = async (book) => {
     console.log({ ...book, book: bookId, quantity: Number(book.quantity) })
     const { data } = await borrowBook({ ...book, book: bookId })
+
+    dispatch(booksApi.util.invalidateTags(['books']))
     if (data.success) {
-      toast.success(data.message)
+      toast.success(data.message);
+      navigate("/borrow-summary")
     } else {
       toast.error(data.error.errors.quantity.message)
     }

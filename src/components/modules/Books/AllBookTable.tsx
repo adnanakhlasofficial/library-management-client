@@ -27,6 +27,7 @@ export default function AllBookTable() {
       <Table>
         <TableHeader>
           <TableRow>
+            <TableHead></TableHead>
             <TableHead>Title</TableHead>
             <TableHead>Author</TableHead>
             <TableHead>Genre</TableHead>
@@ -39,7 +40,7 @@ export default function AllBookTable() {
         <TableBody>
           {
             data?.data.length > 0
-              ? data?.data?.map((book: IBook) => <SingleTableRow key={book._id} book={book} />)
+              ? data?.data?.map((book: IBook, idx: number) => <SingleTableRow key={book._id} book={book} idx={idx} />)
               : <TableRow><TableCell colSpan={7}><h2 className="text-2xl font-semibold mt-2 text-center">No books found</h2></TableCell></TableRow>
           }
         </TableBody>

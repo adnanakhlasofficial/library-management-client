@@ -17,6 +17,7 @@ export const borrowApi = createApi({
         method: "POST",
         body: borrowData,
       }),
+      invalidatesTags: ["borrows"],
     }),
   }),
 });
