@@ -14,7 +14,7 @@ import SingleTableRow from "./SingleTableRow"
 export default function AllBookTable() {
 
   const state = useAppSelector(selectQueries)
-
+  console.log(state)
   const { isError, isLoading, data, error } = useGetBooksQuery(state)
 
   if (isLoading) return <p>Loading...</p>

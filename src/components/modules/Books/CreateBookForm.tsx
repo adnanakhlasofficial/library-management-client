@@ -15,7 +15,7 @@ export default function CreateBookForm() {
   const form = useForm()
 
   const onSubmit = (data) => {
-    console.log(data)
+    console.log({ ...data, copies: parseInt(data.copies), available: data.copies > 0 ? true : false })
   }
 
   return (
@@ -81,7 +81,7 @@ export default function CreateBookForm() {
               <FormItem>
                 <FormLabel>Copies</FormLabel>
                 <FormControl>
-                  <Input {...field} value={field.value || ""} type="number" min={1} />
+                  <Input {...field} value={field.value || ""} type="number" min={0} />
                 </FormControl>
               </FormItem>
             )}

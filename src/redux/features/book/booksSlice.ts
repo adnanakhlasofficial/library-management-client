@@ -2,25 +2,27 @@ import type { RootState } from "@/redux/store";
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 const initialState = {
-  limit: 10,
-  filter: null,
-  sortBy: "createdAt",
-  sort: "asc",
-  skip: 0,
+  pagination: {
+    limit: 10,
+    filter: null,
+    sortBy: "createdAt",
+    sort: "asc",
+    skip: 0,
+  },
 };
 
 export const booksSlice = createSlice({
   name: "books",
   initialState,
   reducers: {
-    updateLimit: (state, action: PayloadAction<number>) => {
-      state.limit = action.payload;
+    updateSkip: (state, action: PayloadAction<number>) => {
+      state.pagination.skip = action.payload;
     },
   },
 });
 
-export const selectQueries = (state: RootState) => state.books;
+export const selectQueries = (state: RootState) => state.books.pagination;
 
-export const { updateLimit } = booksSlice.actions;
+export const { updateSkip } = booksSlice.actions;
 
 export default booksSlice.reducer;
